@@ -61,7 +61,7 @@ pipeline {
 
         stage('Build Docker Image') {
           steps {
-            sh 'docker build -t ${APP_REPO}:v${env.BUILD_ID} -t ${APP_REPO}:latest .'
+            sh 'docker build -t $APP_REPO:v$BUILD_ID -t $APP_REPO:latest .'
           }
         }
 
