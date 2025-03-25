@@ -21,7 +21,7 @@ pipeline {
     stages {
         stage("Test") {
             steps {
-                sh "mvn test"
+                sh "mvn clean test -Djacoco.skip=true"
             }
         }
 
