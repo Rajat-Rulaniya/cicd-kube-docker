@@ -19,6 +19,12 @@ pipeline {
     }
 
     stages {
+        stage("Build") {
+          steps {
+            sh "mvn install"
+          }
+        }
+
         stage("Test") {
             steps {
                 sh "mvn clean test -Djacoco.skip=true"
@@ -84,8 +90,8 @@ pipeline {
 
           steps {
             checkout scm
-
-            sh 'helm upgrade --install --force vprofile-stack helm/vprofilecharts --set appImage=${APP_REPO}:latest --namespace prod'
+            
+            sh 'sudo helm upgrade --install --force vprofile-stack helm/vprofilecharts --set appImage=${APP_REPO}:latest --namespace prod'
           }
         }
     }
