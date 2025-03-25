@@ -71,35 +71,35 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-          steps {
-            sh 'docker build -t $APP_REPO:v$BUILD_ID -t $APP_REPO:latest .'
-          }
-        }
+        // stage('Build Docker Image') {
+        //   steps {
+        //     sh 'docker build -t $APP_REPO:v$BUILD_ID -t $APP_REPO:latest .'
+        //   }
+        // }
 
-        stage('Login to DockerHub') {
-          steps {
-            sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
-          }
-        }
+        // stage('Login to DockerHub') {
+        //   steps {
+        //     sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
+        //   }
+        // }
 
-        stage('Push Image') {
-          steps {
-            sh 'docker push --all-tags ${APP_REPO}'
+        // stage('Push Image') {
+        //   steps {
+        //     sh 'docker push --all-tags ${APP_REPO}'
 
-            sh 'docker rmi -f $(docker images ${APP_REPO} -q)'
-          }
-        }
+        //     sh 'docker rmi -f $(docker images ${APP_REPO} -q)'
+        //   }
+        // }
 
-        stage('Kubernetes Deploy') {
-          agent {label 'KOPS'} 
+        // stage('Kubernetes Deploy') {
+        //   agent {label 'KOPS'} 
 
-          steps {
-            checkout scm
+        //   steps {
+        //     checkout scm
 
-            sh 'sudo helm upgrade --install --force vprofile-stack helm/vprofilecharts --set appImage=${APP_REPO}:latest --namespace prod'
-          }
-        }
+        //     sh 'sudo helm upgrade --install --force vprofile-stack helm/vprofilecharts --set appImage=${APP_REPO}:latest --namespace prod'
+        //   }
+        // }
     }
 
     post {
