@@ -21,7 +21,13 @@ pipeline {
     stages {
         stage("Build") {
           steps {
-            sh "mvn install"
+            sh "mvn install -DskipTests"
+          }
+          post {
+              success {
+                  echo 'Now Archiving...'
+                  archiveArtifacts artifacts: '**/target/*.war'
+              }
           }
         }
 
@@ -90,7 +96,7 @@ pipeline {
 
           steps {
             checkout scm
-            
+
             sh 'sudo helm upgrade --install --force vprofile-stack helm/vprofilecharts --set appImage=${APP_REPO}:latest --namespace prod'
           }
         }
