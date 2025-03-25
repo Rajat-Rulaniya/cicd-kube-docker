@@ -31,11 +31,11 @@ pipeline {
           }
         }
 
-        // stage("Test") {
-        //     steps {
-        //         sh "mvn clean test -Djacoco.skip=true"
-        //     }
-        // }
+        stage("Test") {
+            steps {
+                sh "mvn clean test -Djacoco.skip=true"
+            }
+        }
 
         // stage("Checkstyle Analysis") {
         //     steps {
